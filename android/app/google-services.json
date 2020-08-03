@@ -1,0 +1,143 @@
+{
+  "project_info": {
+    "project_number": "682418481070",
+    "firebase_url": "https://koolquiz-4a93b.firebaseio.com",
+    "project_id": "koolquiz-4a93b",
+    "storage_bucket": "koolquiz-4a93b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682418481070:android:5ba18c5b55c7bb26f48a3f",
+        "android_client_info": {
+          "package_name": "com.example.flutterdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682418481070-uljatjhk37qdi7vp4pn4guq5a9v7oskc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBl4KBA8avJFogP_F7mZq1XfmfTdZIlcuo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682418481070-uljatjhk37qdi7vp4pn4guq5a9v7oskc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682418481070:android:efccffd4782c0863f48a3f",
+        "android_client_info": {
+          "package_name": "com.example.myquiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682418481070-n3asptameeh5ah9hhoihobepupepp4jh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myquiz",
+            "certificate_hash": "841da612d6e77580ee8acfeb24407720b26fff89"
+          }
+        },
+        {
+          "client_id": "682418481070-uljatjhk37qdi7vp4pn4guq5a9v7oskc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBl4KBA8avJFogP_F7mZq1XfmfTdZIlcuo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682418481070-uljatjhk37qdi7vp4pn4guq5a9v7oskc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682418481070:android:031c31255b33f535f48a3f",
+        "android_client_info": {
+          "package_name": "com.mohit.quizadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682418481070-vuads1vdepslhe35og02fvta3dposidr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mohit.quizadmin",
+            "certificate_hash": "841da612d6e77580ee8acfeb24407720b26fff89"
+          }
+        },
+        {
+          "client_id": "682418481070-uljatjhk37qdi7vp4pn4guq5a9v7oskc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBl4KBA8avJFogP_F7mZq1XfmfTdZIlcuo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682418481070-uljatjhk37qdi7vp4pn4guq5a9v7oskc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682418481070:android:3679e763adef59adf48a3f",
+        "android_client_info": {
+          "package_name": "com.sarath.paper1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682418481070-uljatjhk37qdi7vp4pn4guq5a9v7oskc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBl4KBA8avJFogP_F7mZq1XfmfTdZIlcuo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682418481070-uljatjhk37qdi7vp4pn4guq5a9v7oskc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
