@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'score.dart';
+import 'dart:async';
 
 class Item{
   String question;
@@ -40,6 +41,33 @@ class _questionState extends State<question> {
   List choice=[];
   int no=0;
   String nextOrFinish="Next";
+
+  //timer implimentation
+
+  Timer _timer;
+  int _start = 15;
+
+  void startTimer() {
+    const oneSec = const Duration(seconds: 1);
+    _timer = new Timer.periodic(
+      oneSec,
+          (Timer timer) => setState(
+            () {
+          if (_start < 1) {
+            timer.cancel();
+          } else {
+            _start = _start - 1;
+          }
+        },
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
 
   var textstyle=TextStyle(fontSize: 25,color: Colors.white);
 
@@ -80,6 +108,8 @@ class _questionState extends State<question> {
 
       });
 
+      startTimer();
+
 
     });
   }
@@ -88,15 +118,50 @@ class _questionState extends State<question> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Container(
+        //color: Colors.yellow,
+        width: 80,
+        height: 80,
+        child: FloatingActionButton(
+          child: Container(
+            padding: EdgeInsets.all(10),
+              child: Text("$_start", style: TextStyle(fontSize: 30, color: Colors.white),textAlign: TextAlign.center,)),
+        ),
+      ),
       appBar: AppBar(
-        title: Column(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text("Question"),
+
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.timer),
+                  Container(width: 5,),
+                  Text("$_start"),
+                ],
+              ),
+            )
           ],
         ),
+
       ),
       body: ListView(
         children: <Widget>[
+//          Container(
+//            //width: 2,
+//            padding: EdgeInsets.all(20),
+//            margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+//            child: Text("$_start", style: TextStyle(fontSize: 25, color: Colors.white),textAlign: TextAlign.center,),
+//            decoration: BoxDecoration(
+//              color: Colors.blue,
+//              //borderRadius: BorderRadius.circular(25),
+//              shape: BoxShape.circle,
+//            ),
+//
+//          ),
           Container(
             padding: EdgeInsets.all(20),
             margin: EdgeInsets.all(10),
@@ -116,6 +181,8 @@ class _questionState extends State<question> {
             onTap: (){
               choice.add(1);
               print(choice.last);
+              resetTimer();
+
               nextQues();
             },
             child: Container(
@@ -138,6 +205,7 @@ class _questionState extends State<question> {
             onTap: (){
               choice.add(2);
               print(choice.last);
+              resetTimer();
               nextQues();
             },
             child: Container(
@@ -160,6 +228,7 @@ class _questionState extends State<question> {
             onTap: (){
               choice.add(3);
               print(choice.last);
+              resetTimer();
               nextQues();
             },
             child: Container(
@@ -183,6 +252,7 @@ class _questionState extends State<question> {
             onTap: (){
               choice.add(4);
               print(choice.last);
+              resetTimer();
               nextQues();
             },
             child: Container(
@@ -226,7 +296,7 @@ class _questionState extends State<question> {
           FlatButton(
             padding: EdgeInsets.all(10),
             onPressed: (){
-
+                resetTimer();
                 nextQues();
               },
             child: Container(
@@ -258,6 +328,14 @@ class _questionState extends State<question> {
           );
         }
     );
+  }
+
+  void resetTimer(){
+    if (_timer != null) {
+      _timer.cancel();
+      _start = 15;
+    }
+    startTimer();
   }
 
   void nextQues(){
