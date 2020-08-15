@@ -74,8 +74,7 @@ class _SetsState extends State<Sets> {
                   child: Center(child:Text(i.toString(),style: textstyle) ,)
                 ),
                 onTap: (){
-                  print(map["SET"+i.toString()+"_ID"]);
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>question(map["SET"+i.toString()+"_ID"])));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>question(str,map["SET"+i.toString()+"_ID"])));
                 },
               );
             }

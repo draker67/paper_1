@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:paper1/Sets.dart';
 import 'loading.dart';
+import 'AboutUs.dart';
 
 
 
@@ -25,26 +26,12 @@ class _CategoriesState extends State<Categories> {
     // TODO: implement initState
     super.initState();
     Firestore.instance.collection("QUIZ").document("Categories").get().then((value){
-      //print(value.data);
       map=value.data;
       setState(() {
         loading=false;
       });
       count=value.data["COUNT"];
     });
-//    //quiz question
-//    Firestore.instance.collection("QUIZ").document("ORnKQaCKuSZzTrYNCVy5").collection("1").document("IUjJajO5PVa99vHsVgLH").get().then((value){
-//      print(value.data);
-//      //map=value.data;
-//    });
-
-//    Firestore.instance.collection("QUIZ").document("ORnKQaCKuSZzTrYNCVy5").get().then((value){
-//      print(value.data["SETS"]);
-//      int c=value.data["SETS"];
-//      for(int i=1;i<=c;i++){
-//        print(value.data["SET"+i.toString()+"_ID"]);
-//      }
-//    });
   }
 
   @override
@@ -52,6 +39,12 @@ class _CategoriesState extends State<Categories> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Categories"),
+        actions: <Widget>[IconButton(
+          icon: Icon(Icons.info,color: Colors.white,size: 35,),
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>About()));
+          },
+        )],
       ),
       body: (loading)?Loading():Container(
         margin: EdgeInsets.only(top: 10),
@@ -92,9 +85,6 @@ class _CategoriesState extends State<Categories> {
   void fstore() async
   {
     Firestore.instance.collection("QUIZ").document("Categories").get().then((value){
-      //print(value.data);
-      map=value.data;
-      print(map["CAT"+"1"+"_NAME"]);
       count=value.data["COUNT"];
     });
   }

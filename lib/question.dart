@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'score.dart';
 import 'dart:async';
+import 'loading.dart';
 
 class Item{
+
   String question;
   String A;
   String B;
@@ -15,18 +17,30 @@ class Item{
   Item(this.question,this.A,this.B,this.C,this.D,this.ans,this.explanation);
 }
 
+class PrimitiveWrapper{
+  var value;
+  PrimitiveWrapper(this.value);
+}
+
 class question extends StatefulWidget {
+  String str="";
   String set="";
-  question(this.set);
+  question(this.str,this.set);
 
 
 
   @override
-  _questionState createState() => _questionState(set);
+  _questionState createState() => _questionState(str,set);
 }
 
 class _questionState extends State<question> {
+  bool tappedA=false;
+  bool tappedB=false;
+  bool tappedC=false;
+  bool tappedD=false;
+
   bool loading=true;
+  String str="";
   String set="";
   Map map;
   String ques="loading";
@@ -45,7 +59,7 @@ class _questionState extends State<question> {
   //timer implimentation
 
   Timer _timer;
-  int _start = 15;
+  int _start = 30;
 
   void startTimer() {
     const oneSec = const Duration(seconds: 1);
@@ -54,7 +68,11 @@ class _questionState extends State<question> {
           (Timer timer) => setState(
             () {
           if (_start < 1) {
-            timer.cancel();
+            choice.add(5);
+            //timer.cancel();
+            resetTimer();
+            nextQues();
+            //startTimer();
           } else {
             _start = _start - 1;
           }
@@ -71,16 +89,15 @@ class _questionState extends State<question> {
 
   var textstyle=TextStyle(fontSize: 25,color: Colors.white);
 
-  _questionState(this.set);
+  _questionState(this.str,this.set);
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    Firestore.instance.collection("QUIZ").document("ORnKQaCKuSZzTrYNCVy5").collection(set).getDocuments().then((snapshot){
+    Firestore.instance.collection("QUIZ").document(str).collection(set).getDocuments().then((snapshot){
       snapshot.documents.forEach((result) {
-        //print(result.data);
         if(result.data["A"]!=null)
           {
             list.add(Item(result.data["QUESTION"], result.data["A"], result.data["B"], result.data["C"], result.data["D"],result.data["ANSWER"],result.data["EXPLANATION"]));
@@ -89,11 +106,9 @@ class _questionState extends State<question> {
 
         if(result.data.containsKey("COUNT")){
           quescount=result.data["COUNT"];
-          print(quescount);
         }
       });
 
-      //print(snapshot.documents[0].data  );
       map=snapshot.documents[0].data;
 
 
@@ -148,20 +163,8 @@ class _questionState extends State<question> {
         ),
 
       ),
-      body: ListView(
+      body: loading?Loading():ListView(
         children: <Widget>[
-//          Container(
-//            //width: 2,
-//            padding: EdgeInsets.all(20),
-//            margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-//            child: Text("$_start", style: TextStyle(fontSize: 25, color: Colors.white),textAlign: TextAlign.center,),
-//            decoration: BoxDecoration(
-//              color: Colors.blue,
-//              //borderRadius: BorderRadius.circular(25),
-//              shape: BoxShape.circle,
-//            ),
-//
-//          ),
           Container(
             padding: EdgeInsets.all(20),
             margin: EdgeInsets.all(10),
@@ -180,17 +183,23 @@ class _questionState extends State<question> {
           GestureDetector(
             onTap: (){
               choice.add(1);
-              print(choice.last);
-              resetTimer();
+              setState(() {
+                tappedA=true;
+              });
 
-              nextQues();
+              Timer(Duration(seconds: 1), (){
+                resetTimer();
+                nextQues();
+                tappedA=false;
+              });
+
             },
             child: Container(
               width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.all(20),
                 margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: tappedA?check(1, list[no].ans):Colors.blue,
                     borderRadius: BorderRadius.circular(10),
                   boxShadow: [BoxShadow(
                     color: Colors.grey[600],
@@ -204,16 +213,24 @@ class _questionState extends State<question> {
           GestureDetector(
             onTap: (){
               choice.add(2);
-              print(choice.last);
-              resetTimer();
-              nextQues();
+
+
+              setState(() {
+                tappedB=true;
+              });
+              Timer(Duration(seconds: 1), (){
+                resetTimer();
+                nextQues();
+                tappedB=false;
+              });
+
             },
             child: Container(
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.all(20),
                 margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: tappedB?check(2, list[no].ans):Colors.blue,
                     borderRadius: BorderRadius.circular(10),
                   boxShadow: [BoxShadow(
                     color: Colors.grey[600],
@@ -227,9 +244,14 @@ class _questionState extends State<question> {
           GestureDetector(
             onTap: (){
               choice.add(3);
-              print(choice.last);
-              resetTimer();
-              nextQues();
+              setState(() {
+                tappedC=true;
+              });
+              Timer(Duration(seconds: 1), (){
+                resetTimer();
+                nextQues();
+                tappedC=false;
+              });
             },
             child: Container(
 
@@ -237,7 +259,7 @@ class _questionState extends State<question> {
                 padding: EdgeInsets.all(20),
                 margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: tappedC?check(3, list[no].ans):Colors.blue,
                     borderRadius: BorderRadius.circular(10),
                   boxShadow: [BoxShadow(
                     color: Colors.grey[600],
@@ -251,16 +273,21 @@ class _questionState extends State<question> {
           GestureDetector(
             onTap: (){
               choice.add(4);
-              print(choice.last);
-              resetTimer();
-              nextQues();
+              setState(() {
+                tappedD=true;
+              });
+              Timer(Duration(seconds: 1), (){
+                resetTimer();
+                nextQues();
+                tappedD=false;
+              });
             },
             child: Container(
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.all(20),
                 margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: tappedD?check(4, list[no].ans):Colors.blue,
                     borderRadius: BorderRadius.circular(10),
                   boxShadow: [BoxShadow(
                     color: Colors.grey[600],
@@ -272,30 +299,9 @@ class _questionState extends State<question> {
             ),
           ),
           FlatButton(
-            padding: EdgeInsets.all( 10),
-            //color: Colors.red,
-            child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.all(20),
-                //margin: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(10),
-                  boxShadow: [BoxShadow(
-                    color: Colors.grey[600],
-                    blurRadius: 5.0,
-
-                  )],
-                ),
-                child: Text("Explanation",style: textstyle,textAlign: TextAlign.center,)
-            ),
-            onPressed: (){
-              showdialog();
-            },
-          ),
-          FlatButton(
             padding: EdgeInsets.all(10),
             onPressed: (){
+              choice.add(5);
                 resetTimer();
                 nextQues();
               },
@@ -316,6 +322,16 @@ class _questionState extends State<question> {
     );
   }
 
+
+  Color check(choice,ans){
+    if(choice.toString()==ans){
+      return Colors.green;
+    }
+    else{
+      return Colors.red;
+    }
+  }
+
   showdialog(){
     showDialog(
         context: context,
@@ -333,7 +349,7 @@ class _questionState extends State<question> {
   void resetTimer(){
     if (_timer != null) {
       _timer.cancel();
-      _start = 15;
+      _start = 30;
     }
     startTimer();
   }
@@ -341,15 +357,11 @@ class _questionState extends State<question> {
   void nextQues(){
 
     if(nextOrFinish=="Finish"){
-      print("no more question");
-      //return;
       Navigator.push(context, MaterialPageRoute(builder: (context)=>score(list,choice)));
     }
 
     setState(() {
       no++;
-      print(no);
-      print(list[no].D);
 
       if(list[no].question==null){
         no++;
@@ -357,7 +369,6 @@ class _questionState extends State<question> {
     });
 
     if((no+1).toString()==(quescount)){
-      print("lastquestion");
       setState(() {
         nextOrFinish="Finish";
       });
