@@ -72,6 +72,16 @@ class _scoreState extends State<score> {
     });
   }
 
+  Color wrongchoice(opt,i){
+    print("opt:"+opt.toString()+" choice: "+choice[i].toString());
+    if(opt==choice[i]){
+      return Colors.red;
+    }
+    else{
+      return optionColor;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -140,10 +150,10 @@ class _scoreState extends State<score> {
                 child: Column(
                   children: <Widget>[
                     circularQuestion(context, list[(index)].question, optionColor),
-                    circularAnswer(context, "1. "+list[(index)].A, ans1?Colors.green: optionColor),
-                    circularAnswer(context, "2. "+list[(index)].B, ans2?Colors.green: optionColor),
-                    circularAnswer(context, "3. "+list[(index)].C, ans3?Colors.green: optionColor),
-                    circularAnswer(context, "4. "+list[(index)].D, ans4?Colors.green: optionColor),
+                    circularAnswer(context, "1. "+list[(index)].A, ans1?Colors.green: wrongchoice(1,index)),
+                    circularAnswer(context, "2. "+list[(index)].B, ans2?Colors.green: wrongchoice(2,index)),
+                    circularAnswer(context, "3. "+list[(index)].C, ans3?Colors.green: wrongchoice(3,index)),
+                    circularAnswer(context, "4. "+list[(index)].D, ans4?Colors.green: wrongchoice(4,index)),
                     circularAnswer(context, "ANS: "+list[(index)].ans, optionColor),
                     circularAnswer(context, "Explanation: "+list[(index)].explanation, optionColor),
                 ],
@@ -151,6 +161,8 @@ class _scoreState extends State<score> {
             }),
       ),
     );
+
+
   }
 
 
